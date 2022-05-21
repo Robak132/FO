@@ -18,9 +18,7 @@ class Slider(Widget):
         self.surf = pygame.surface.Surface((150, 100))
         self.txt_surf = font.render(name, True, WHITE)
         self.txt_rect = self.txt_surf.get_rect(center=(75, 15))
-
         self.hit = False  # the hit attribute indicates widgets.py movement due to mouse interaction
-
         self.button_surf = self.render()
 
     def render(self):
@@ -54,8 +52,11 @@ class Slider(Widget):
             pos = pygame.mouse.get_pos()
             if self.button_rect.collidepoint(pos):
                 self.hit = True
+                return True
         elif event.type == pygame.MOUSEBUTTONUP:
             self.hit = False
         elif event.type == pygame.MOUSEMOTION:
             if self.hit:
                 self.move()
+                return True
+        return False
