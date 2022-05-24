@@ -33,21 +33,37 @@ class Atom:
 
 class Electron:
     def __init__(self):
-        self.x = 115 + random.randint(0, 50)
+        self.x = 115 + random.randint(0, 30)
+        # self.x = 120
         self.y = 475 + random.randint(0, 500)
+        # self.y = 520
         self.vx = 0
         self.vy = 0
         self.object = pygame.draw.circle(screen, GREEN, (self.x, self.y), 2)
 
     def move(self):
-        self.vx = 2
-        for atom in atoms:
-            if math.sqrt((atom.x - self.x) * (atom.x - self.x) + (atom.y - self.y) * (atom.y - self.y)) < interactables[2].val:
-                self.vx = 0
-                self.vy = 0
+        self.vx += 0.01
+        x = self.x + self.vx
+        y = self.y + self.vy
 
-        self.x += self.vx
-        self.y += self.vy
+        reflected = False
+        for atom in atoms:
+            if math.sqrt((atom.x - x) * (atom.x - x) + (atom.y - y) * (atom.y - y)) <= interactables[2].val:
+                if self.vy == 0 and self.vx == 0.01:
+                    self.x = 115
+                    break
+                cos = (atom.x - x) / interactables[2].val
+                alpha = math.acos(cos)*2 if ((atom.x - x) * (atom.y - y) < 0) else math.acos(cos)*2 - math.pi
+                vx =  (-self.vx) * math.cos(alpha) + (-self.vy) * math.sin(alpha)
+                vy = -(-self.vx) * math.sin(alpha) + (-self.vy) * math.cos(alpha)
+                self.vy = round(vy, 6)
+                self.vx = round(vx, 6)
+                reflected = True
+                break
+        if not reflected:
+            self.x = x
+            self.y = y
+
         if self.y < 475:
             self.y = 975 - self.y + 475
         if self.x <= 875:
@@ -80,8 +96,8 @@ if __name__ == '__main__':
 
     interactables = [
         Slider(screen, "Temperature", 50, 100, 1, 425, 100, font),
-        Slider(screen, "Atoms Concentration", 50, 200, 1, 425, 200, font),
-        Slider(screen, "Atoms Size", 10, 15, 5, 425, 300, font)
+        Slider(screen, "Atoms Concentration", 50, 250, 1, 425, 200, font),
+        Slider(screen, "Atoms Size", 10, 20, 5, 425, 300, font)
     ]
     electrons = create_electrons()
     atoms = create_atoms()
