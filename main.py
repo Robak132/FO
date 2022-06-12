@@ -17,17 +17,20 @@ class Atom:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.vx, self.vy = self.random_movement()
+        self.vx, self.vy = self.x, self.y
         self.object = pygame.draw.circle(screen, BLUE, (self.x, self.y), interactables[2].val)
-
+    
     @staticmethod
     def random_movement():
-        return random.uniform(-0.1, 0.1), random.uniform(-0.1, 0.1)
+        t = interactables[0].val
+        return random.uniform(-0.01 * t, 0.01 * t), random.uniform(-0.01 * t, 0.01 * t)
 
     def move(self):
-        self.vx, self.vy = self.random_movement()
-        # self.x += self.vx
-        # self.y += self.vy
+        tup = self.random_movement()
+        if(self.x + tup[0] < self.vx + MESH_DISTANCE and self.x + tup[0] > self.vx - MESH_DISTANCE):
+            self.x += tup[0]
+        if(self.y + tup[1] < self.vy + MESH_DISTANCE and self.y + tup[1] > self.vy - MESH_DISTANCE):
+            self.y += tup[1]
         self.object = pygame.draw.circle(screen, BLUE, (self.x, self.y), interactables[2].val)
 
 
