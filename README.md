@@ -1,2 +1,2 @@
-# FO
-Projekt z Fizyki Ogólnej
+# FO - Projekt
+Klasyczny model zależności przewodnictwa od temperatury

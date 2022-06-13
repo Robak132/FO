@@ -27,9 +27,9 @@ class Atom:
 
     def move(self):
         tup = self.random_movement()
-        if(self.x + tup[0] < self.vx + MESH_DISTANCE and self.x + tup[0] > self.vx - MESH_DISTANCE):
+        if self.vx + MESH_DISTANCE > self.x + tup[0] > self.vx - MESH_DISTANCE:
             self.x += tup[0]
-        if(self.y + tup[1] < self.vy + MESH_DISTANCE and self.y + tup[1] > self.vy - MESH_DISTANCE):
+        if self.vy + MESH_DISTANCE > self.y + tup[1] > self.vy - MESH_DISTANCE:
             self.y += tup[1]
         self.object = pygame.draw.circle(screen, BLUE, (self.x, self.y), interactables[2].val)
 
@@ -37,9 +37,7 @@ class Atom:
 class Electron:
     def __init__(self):
         self.x = 115 + random.randint(0, 30)
-        # self.x = 120
         self.y = 475 + random.randint(0, 500)
-        # self.y = 520
         self.vx = 0
         self.vy = 0
         self.object = pygame.draw.circle(screen, GREEN, (self.x, self.y), 2)
@@ -86,7 +84,6 @@ def create_atoms():
 def create_electrons():
     electrons = []
     for i in range(int(interactables[1].val) + 25):
-    # for i in range(1):
         electrons.append(Electron())
     return electrons
 
@@ -99,7 +96,7 @@ if __name__ == '__main__':
 
     interactables = [
         Slider(screen, "Temperature", 50, 100, 1, 425, 100, font),
-        Slider(screen, "Atoms Concentration", 50, 250, 1, 425, 200, font),
+        Slider(screen, "Electron Concentration", 50, 250, 1, 425, 200, font),
         Slider(screen, "Atoms Size", 10, 20, 5, 425, 300, font)
     ]
     electrons = create_electrons()

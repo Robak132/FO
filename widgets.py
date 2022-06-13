@@ -20,6 +20,7 @@ class Slider(Widget):
         self.txt_rect = self.txt_surf.get_rect(center=(75, 15))
         self.hit = False  # the hit attribute indicates widgets.py movement due to mouse interaction
         self.button_surf = self.render()
+        self.button_rect = None
 
     def render(self):
         pygame.draw.rect(self.surf, WHITE, [35, 30, 80, 5], 0)
