@@ -3,7 +3,7 @@ import random
 import pygame as pygame
 from consts import *
 from widgets import Slider
-
+from statistics import mean
 
 def render_static():
     screen.fill(BLACK)
@@ -57,7 +57,7 @@ class Electron:
                     break
                 cos = (atom.x - x) / interactables[2].val
                 alpha = math.acos(cos)*2 if ((atom.x - x) * (atom.y - y) < 0) else math.acos(cos)*2 - math.pi
-                vx =  (-self.vx) * math.cos(alpha) + (-self.vy) * math.sin(alpha)
+                vx = (-self.vx) * math.cos(alpha) + (-self.vy) * math.sin(alpha)
                 vy = -(-self.vx) * math.sin(alpha) + (-self.vy) * math.cos(alpha)
                 self.vy = round(vy, 6)
                 self.vx = round(vx, 6)
@@ -119,8 +119,14 @@ if __name__ == '__main__':
         for atom in atoms:
             atom.move()
 
+        vx = []
         for electron in electrons:
             electron.move()
+            vx.append(electron.vx)
+        font = pygame.font.Font('freesansbold.ttf', 15)
+        text = font.render(f"Predkosc elektronu: {round(mean(vx), 2)}", True, WHITE)
+        textRect = text.get_rect()
+        screen.blit(text, textRect)
 
         pygame.display.flip()
 
