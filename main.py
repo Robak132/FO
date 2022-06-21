@@ -121,7 +121,7 @@ if __name__ == '__main__':
             electron.move()
             vx.append(electron.vx)
         font = pygame.font.Font('freesansbold.ttf', 15)
-        text = font.render(f"Predkosc elektronu: {round(mean(vx), 2)}", True, WHITE)
+        text = font.render(f"Velocity of electrons: {round(mean(vx), 2)}", True, WHITE)
         textRect = text.get_rect()
         screen.blit(text, textRect)
 
